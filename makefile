@@ -1,7 +1,7 @@
 # choice: makefile
 #	R.W.van 't Veer, Amsterdam, 16.IV.96
 #
-# $Id: makefile,v 1.3 1998-07-11 22:28:06 remco Exp $
+# $Id: makefile,v 1.4 1999-10-17 21:31:16 remco Exp $
 
 prefix =	/usr/local
 BINDIR =	$(prefix)/bin
@@ -25,7 +25,7 @@ install: choice
 
 clean:
 	rm -f *.o choice
-	rm -f a.out *~
+	rm -f a.out *~ core tags
 
 backup:
 	tar -chf choice.tar $(FILES)
