@@ -1,5 +1,7 @@
 # choice: makefile
 #	R.W.van 't Veer, Amsterdam, 16.IV.96
+#
+# $Id: makefile,v 1.2 1998-07-11 22:03:47 remco Exp $
 
 prefix =	/usr/local
 BINDIR =	$(prefix)/bin
