@@ -1,0 +1,94 @@
+.\" R.W. van 't Veer, Amsterdam, 12.XI.95
+.\" Modified: 13.V.96
+.\" $Id: choice.1,v 1.1 1998-07-11 22:02:21 remco Exp $
+.\"
+.TH CHOICE 1 "13.V.96" "MorzelBlues" "MorzelBlues Utilities"
+.SH NAME
+choice \- small menu utility
+.SH SYNOPSIS
+.B choice
+.RB [ \-i
+.IR initial ]
+.RB [ \-s
+.IR scope ]
+.I item item
+\&...
+.SH DESCRIPTION
+This manual page explains the MorzelBlues
+.B choice
+utility.  It is an easy to use menu utility to select an item from a list.
+.B choice
+supports the
+.I arrow-keys
+and the
+.BR vi (1)
+movement keys for toggling between items, uses
+.I stand-out
+or
+.I reverse
+mode for the currently selected and uses
+.I dim
+or
+.I underline
+mode for the not selectable items.  A not selectable item proceeds with an
+.I exclamation-mark
+or
+.IR number-sign .
+The selected item is written to
+.I standard
+.IR error .
+.SH OPTIONS
+.TP
+.BI \-i \ initial
+start off with
+.I initial
+as the currently active item.
+.TP
+.BI \-s \ scope
+set the scroll scope.
+.SH EXAMPLE
+A small example of a Bourne-shell-script which stores `Yes' or `No' in
+the variable `ans':
+.sp
+.RS
+.nf
+ans = $(choice '#REALLY?' Yes No 2>&1 > $(tty))
+.fi
+.RE
+.sp
+And a C-shell example:
+.sp
+.RS
+.nf
+set tty = `tty`
+set ans = `(choice '#REALLY?' Yes No > $tty) >& /dev/fd/1`
+.fi
+.RE
+.SH "SEE ALSO"
+.BR dialog (1),
+.BR termcap (5),
+.BR vi (1)
+.SH DIAGNOSTICS
+Exit status is 0 if no error occurred. In a non-zero case the error message
+is written to standard error.
+.B choice
+writes the currently selected item on
+.I RET
+or nothing on
+.I ESC
+or
+.I q
+to standard error.
+.SH BUGS
+Send reports of undesirable effects to:
+.sp
+.RS
+.nf
+R.W. van 't Veer
+Getijdenlaan 68
+8226 DG  Lelystad
+Holland
+.fi
+.RE
+.sp
+Sorry no E-mail address.
