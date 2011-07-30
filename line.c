@@ -114,12 +114,12 @@ void lm_setup()
 	}
 	lm_lines--;
 
-	lm_up = strdup(tgetstr("up", &tp));
-	lm_al = strdup(tgetstr("al", &tp));
-	if (lm_up == NULL || lm_al == NULL) {
+	if (tgetstr("up", &tp) == NULL || tgetstr("al", &tp) == NULL) {
 	    fputs("line: termcap `up' and/ or `al' not avialable\n", stderr);
 	    exit(1);
 	}
+	lm_up = strdup(tgetstr("up", &tp));
+	lm_al = strdup(tgetstr("al", &tp));
     } else {
 	fputs("line: termcap not avialable\n", stderr);
 	exit(1);
