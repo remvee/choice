@@ -45,30 +45,31 @@ char *tc_ks, *tc_ke, *tc_sactive, *tc_eactive, *tc_sdummy, *tc_edummy;
 int changedtermios = 0;		/* changed terminal ioctl settings */
 struct termios savedtermios;
 
-/* reset every thing and exit */
-
-void doexit(int ret) {
+/* reset everything and exit */
+void reset_term() {
     if (tc_ks != NULL && tc_ke != NULL)
 	tputs(tc_ke, 1, (outfuntype) putchar);
     if (changedtermios)
 	tcsetattr(0, TCSAFLUSH, &savedtermios);
-    exit(ret);
 }
 
 /* signal stuff */
 void sighandler(int signo) {
-    doexit(EXIT_FAILURE);
+    reset_term();
+    exit(EXIT_FAILURE);
 }
 
 /* error handling */
 void doerror(char *msg) {
     fprintf(stderr, "%s: %s\n", myname, msg);
-    doexit(EXIT_FAILURE);
+    reset_term();
+    exit(EXIT_FAILURE);
 }
-void dousage()
-{
+
+void dousage() {
     fprintf(stderr, USAGE, myname);
-    doexit(EXIT_FAILURE);
+    reset_term();
+    exit(EXIT_FAILURE);
 }
 
 void putitem_setup() {
@@ -94,8 +95,7 @@ void putitem_setup() {
 /* putitem:	IN:	arg; structure with position, label and status
 		OUT:
 */
-void putitem(int pos)
-{
+void putitem(int pos) {
     char label[tc_co];
     int c = center_co;
     int i;
@@ -158,8 +158,7 @@ void putitem(int pos)
 } /* putitem */
 
 /* MAIN */
-void main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int ret, count = 0;
     int selectable_found = 0;
     char *initial = NULL;
@@ -176,7 +175,7 @@ void main(int argc, char *argv[])
 	    case 'i':		/* initial item */
 		if (initial) {
 		    fprintf(stderr, "%s: multiple -i options\n", myname);
-		    doexit(EXIT_FAILURE);
+		    return EXIT_FAILURE;
 		}
 		initial = optarg;
 		break;
@@ -255,5 +254,6 @@ void main(int argc, char *argv[])
     if ((ret = dochoice(items, count, initial)) != -1)
 	fputs(items[ret]->label, stderr);
 
-    doexit(EXIT_SUCCESS);
+    reset_term();
+    return EXIT_SUCCESS;
 } /* main */
