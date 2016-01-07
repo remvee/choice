@@ -162,13 +162,13 @@ int main(int argc, char *argv[]) {
     int ret, count = 0;
     int selectable_found = 0;
     char *initial = NULL;
-    char ch;
+    int ch;
 
     myname = argv[0];
 
 /* get options */
-    while ((ch = getopt(argc, argv, "ci:s:")) != EOF)
-	switch(ch) {
+    while ((ch = getopt(argc, argv, "ci:s:")) != -1)
+	switch((char) ch) {
 	    case 'c':		/* center */
 		center = 1;
 		break;
