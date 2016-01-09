@@ -1,8 +1,6 @@
 .\" R.W. van 't Veer, Amsterdam, 12.XI.95
-.\" Modified: 13.V.96
-.\" $Id: choice.1,v 1.2 1998-07-11 22:26:14 remco Exp $
 .\"
-.TH CHOICE 1 "13.V.96" "MorzelBlues" "MorzelBlues Utilities"
+.TH CHOICE 1 "" ""
 .SH NAME
 choice \- small menu utility
 .SH SYNOPSIS
@@ -52,7 +50,7 @@ the variable `ans':
 .sp
 .RS
 .nf
-ans = $(choice '#REALLY?' Yes No 2>&1 > $(tty))
+ans=$(choice '#REALLY?' Yes No 2>&1 > $(tty))
 .fi
 .RE
 .sp
@@ -79,6 +77,3 @@ or nothing on
 or
 .I q
 to standard error.
-.SH BUGS
-Send reports of undesirable effects to:
-remco@morzelblues.xs4all.nl
