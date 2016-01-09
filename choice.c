@@ -1,7 +1,5 @@
 /* choice/choice.c
  *   R.W. van 't Veer, Amsterdam, 17.IV.96
- * 
- * $Id: choice.c,v 1.1 1998-07-11 22:11:21 remco Exp $ 
  */
 
 #include <stdio.h>
@@ -9,18 +7,14 @@
 #include <string.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <sys/ioctl.h>
+#include <signal.h>
 
 #include "keymap.h"
 #include "line.h"
 #include "choice.h"
 
 int active, items_num;
-
-#if 0
-# include <sys/termio.h>
-#endif
-#include <sys/ioctl.h>
-#include <signal.h>
 
 void winsizechange(int signo) {
     struct winsize winsize;
@@ -59,17 +53,7 @@ int dochoice(item *items[], int num, char *init)
     }
 
     items[active]->status = ACTIVE;
-#if 1
     lm_start_scope(active, scroll_scope, num);
-#else
-    if (active+scroll_scope >= num)
-	lm_start(num-1, num);
-    else if (active-scroll_scope < 0)
-	lm_start(0, num);
-    else
-	lm_start(active+scroll_scope, num);
-    lm_goto(active);
-#endif
 
 /* interaction loop */
     while(1) {

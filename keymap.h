@@ -1,7 +1,5 @@
 /* keymap.h: defines for keymapping
  *   R.W. van 't Veer, Amsterdam, 1.V.96
- * 
- * $Id: keymap.h,v 1.1 1998-07-11 22:11:21 remco Exp $ 
  */
 
 #include <sys/time.h>

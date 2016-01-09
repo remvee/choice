@@ -1,7 +1,5 @@
 /* choice/main.c
  *   R.W. van 't Veer, Amsterdam, 17.IV.96
- * 
- * $Id: main.c,v 1.1 1998-07-11 22:11:21 remco Exp $ 
  */
 
 #include <stdio.h>

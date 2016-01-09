@@ -1,7 +1,5 @@
 /* line.c
  *   R.W. van 't Veer, 2.VI.96, Amsterdam
- * 
- * $Id: line.c,v 1.1 1998-07-11 22:11:21 remco Exp $ 
  */
 
 #include <stdio.h>

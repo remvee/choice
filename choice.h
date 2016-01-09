@@ -1,7 +1,5 @@
 /* choice/choice.h
  *   R.W. van 't Veer, Amsterdam, 16.IV.96
- * 
- * $Id: choice.h,v 1.1 1998-07-11 22:11:21 remco Exp $ 
  */
 
 void doerror(char *m);
