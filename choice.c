@@ -27,10 +27,10 @@ void winsizechange() {
     signal(SIGWINCH, winsizechange);
 }
 
-/* dochoice:	IN:	items;	array of menu items
-			num;	number of menu items
-			init;	initial item
-		OUT:	return;	index of selected item or -1
+/* dochoice:    IN:     items;  array of menu items
+                        num;    number of menu items
+                        init;   initial item
+                OUT:    return; index of selected item or -1
 */
 int dochoice(item *items[], int num, char *init)
 {
@@ -43,13 +43,13 @@ int dochoice(item *items[], int num, char *init)
 
 /* get and select initial/first */
     for (active = 0; active < num &&
-	items[active]->status != ITEM; active++) ;
+        items[active]->status != ITEM; active++) ;
     if (init) {
-	for (i = active; i < num; i++)
-	    if (items[i]->status == ITEM &&
-		!strncmp(init, items[i]->label, strlen(init))) break;
-	if (i != num)
-	    active = i;
+        for (i = active; i < num; i++)
+            if (items[i]->status == ITEM &&
+                !strncmp(init, items[i]->label, strlen(init))) break;
+        if (i != num)
+            active = i;
     }
 
     items[active]->status = ACTIVE;
@@ -57,65 +57,65 @@ int dochoice(item *items[], int num, char *init)
 
 /* interaction loop */
     while(1) {
-	switch (ch = km_getkey(NULL)) {
-	    case KUP: move = direction = -1; break;
-	    case KDOWN: move = direction = 1; break;
-	    case KPRIOR: move = -lm_lines-1; direction = -1; break;
-	    case KNEXT: move = lm_lines+1; direction = 1; break;
-	    case KTOP: move = -active; direction = 1; break;
-	    case KBOTTOM: move = num-active; direction = -1; break;
-	    case '\e': case 'q':
-		active = -1;
-	    case '\r': case '\n':
-		lm_end();
-		return active;
-	    case '\14':		/* Ctrl L */
-		lm_refresh();
-		lm_goto(active);
-		continue;
-	    case '\0':
-		continue;
-	    default:
-		putchar('\a');
-		fflush(stdout);
-		continue;
-	}
+        switch (ch = km_getkey(NULL)) {
+            case KUP: move = direction = -1; break;
+            case KDOWN: move = direction = 1; break;
+            case KPRIOR: move = -lm_lines-1; direction = -1; break;
+            case KNEXT: move = lm_lines+1; direction = 1; break;
+            case KTOP: move = -active; direction = 1; break;
+            case KBOTTOM: move = num-active; direction = -1; break;
+            case '\e': case 'q':
+                active = -1;
+            case '\r': case '\n':
+                lm_end();
+                return active;
+            case '\14':         /* Ctrl L */
+                lm_refresh();
+                lm_goto(active);
+                continue;
+            case '\0':
+                continue;
+            default:
+                putchar('\a');
+                fflush(stdout);
+                continue;
+        }
 
-	items[active]->status = ITEM;
+        items[active]->status = ITEM;
 /* select next */
-	newpos = active + move;
-	if (newpos < 0) newpos = 0;
-	if (newpos >= num) newpos = num-1;
-	while (items[newpos]->status != ITEM) {
-	    newpos += direction;
-	    if (newpos< 0) {
-		newpos= 0;
-		direction = 1;
-	    }
-	    if (newpos>= num) {
-		newpos= num-1;
-		direction = -1;
-	    }
-	}
-	if (newpos == active) {
-	    putchar('\a');
-	    fflush(stdout);
-	    continue;
-	}
+        newpos = active + move;
+        if (newpos < 0) newpos = 0;
+        if (newpos >= num) newpos = num-1;
+        while (items[newpos]->status != ITEM) {
+            newpos += direction;
+            if (newpos< 0) {
+                newpos= 0;
+                direction = 1;
+            }
+            if (newpos>= num) {
+                newpos= num-1;
+                direction = -1;
+            }
+        }
+        if (newpos == active) {
+            putchar('\a');
+            fflush(stdout);
+            continue;
+        }
 
 /* unselect */
-	lm_goto(active);
+        lm_goto(active);
 /* scroll scope */
-	if (newpos+scroll_scope >= num)
-	    lm_goto(num-1);
-	else if (newpos-scroll_scope < 0)
-	    lm_goto(0);
-	else if (newpos+scroll_scope > lm_bottom)
-	    lm_goto(newpos+scroll_scope);
-	else if (newpos-scroll_scope < lm_top)
-	    lm_goto(newpos-scroll_scope);
+        if (newpos+scroll_scope >= num)
+            lm_goto(num-1);
+        else if (newpos-scroll_scope < 0)
+            lm_goto(0);
+        else if (newpos+scroll_scope > lm_bottom)
+            lm_goto(newpos+scroll_scope);
+        else if (newpos-scroll_scope < lm_top)
+            lm_goto(newpos-scroll_scope);
 /* select */
-	items[active = newpos]->status = ACTIVE;
-	lm_goto(active);
+        items[active = newpos]->status = ACTIVE;
+        lm_goto(active);
     }
 } /* dochoice */
