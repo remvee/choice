@@ -18,4 +18,4 @@ typedef struct {
 } item;
 
 extern int scroll_scope;
-extern int tc_co;
+extern unsigned int tc_co;

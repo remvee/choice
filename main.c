@@ -29,15 +29,14 @@ void winsizechange(int signo);
 #define USAGE	"usage: %s [-c] [-i INITITIAL] [-s SCOPE] ITEM ...\n"
 char *myname;
 int scroll_scope = 1;
-int center = 0;
-int center_co = 0;
+unsigned int center = 0, center_co = 0;
 
 item **items = NULL;
 item *item_buf = NULL;
 
 #define TBUFSZ	1024
 char tstrbuf[TBUFSZ], tbuf[TBUFSZ], *tp = tstrbuf;
-int tc_co;
+unsigned int tc_co;
 char *tc_ks, *tc_ke, *tc_sactive, *tc_eactive, *tc_sdummy, *tc_edummy;
 
 int changedtermios = 0;		/* changed terminal ioctl settings */
@@ -52,7 +51,7 @@ void reset_term() {
 }
 
 /* signal stuff */
-void sighandler(int signo) {
+void sighandler() {
     reset_term();
     exit(EXIT_FAILURE);
 }
@@ -71,9 +70,15 @@ void dousage() {
 }
 
 void putitem_setup() {
+    int val;
+
     if (tgetent(tbuf, getenv("TERM")) != 1)
 	doerror("no info about terminal avialable");
-    if ((tc_co = tgetnum("co")) == -1) tc_co = 80;
+    if ((val = tgetnum("co")) < 0) {
+	tc_co = 80;
+    } else {
+	tc_co = (unsigned) val;
+    }
 
 /* get modes to show item status */
     tc_sactive = tgetstr("mr", &tp);
@@ -96,7 +101,7 @@ void putitem_setup() {
 void putitem(int pos) {
     char label[tc_co];
     int c = center_co;
-    int i;
+    unsigned int i;
 
     if (center && center_co > tc_co-3)
 	c = tc_co-3;

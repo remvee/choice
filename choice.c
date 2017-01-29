@@ -16,7 +16,7 @@
 
 int active, items_num;
 
-void winsizechange(int signo) {
+void winsizechange() {
     struct winsize winsize;
 
     ioctl(1, TIOCGWINSZ, &winsize);
@@ -35,7 +35,7 @@ void winsizechange(int signo) {
 int dochoice(item *items[], int num, char *init)
 {
     int i, move, direction;
-    int newpos; 
+    int newpos;
     char ch;
 
 /* for SIGWINCH */

@@ -6,7 +6,7 @@ BINDIR =	$(PREFIX)/bin
 MAN1DIR =	$(PREFIX)/share/man/man1
 
 CC =		gcc
-CFLAGS =	-Wall -O2
+CFLAGS =	-Wall -Wextra -O2
 LDFLAGS =
 LIBS =		-lncurses
 
