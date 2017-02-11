@@ -1,0 +1,48 @@
+CHOICE(1)                   General Commands Manual                  CHOICE(1)
+
+
+
+NAME
+       choice - small menu utility
+
+SYNOPSIS
+       choice [-i initial] [-s scope] item item ...
+
+DESCRIPTION
+       This  manual  page  explains  the MorzelBlues choice utility.  It is an
+       easy to use menu utility to select an item from a  list.   choice  sup‐
+       ports  the  arrow-keys and the vi(1) movement keys for toggling between
+       items, uses stand-out or reverse mode for the  currently  selected  and
+       uses  dim  or  underline  mode  for  the  not  selectable items.  A not
+       selectable item proceeds with an exclamation-mark or number-sign.   The
+       selected item is written to standard error.
+
+OPTIONS
+       -i initial
+              start off with initial as the currently active item.
+
+       -s scope
+              set the scroll scope.
+
+EXAMPLE
+       A  small example of a Bourne-shell-script which stores `Yes' or `No' in
+       the variable `ans':
+
+              ans=$(choice '#REALLY?' Yes No 2>&1 > $(tty))
+
+       And a C-shell example:
+
+              set tty = `tty`
+              set ans = `(choice '#REALLY?' Yes No > $tty) >& /dev/fd/1`
+
+SEE ALSO
+       dialog(1), termcap(5), vi(1)
+
+DIAGNOSTICS
+       Exit status is 0 if no error occurred. In a  non-zero  case  the  error
+       message  is  written  to  standard  error.  choice writes the currently
+       selected item on RET or nothing on ESC or q to standard error.
+
+
+
+                                                                     CHOICE(1)

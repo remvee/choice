@@ -25,9 +25,8 @@ clean:
 	rm -f *.o choice
 	rm -f a.out *~ core tags
 
-backup:
-	tar -chf choice.tar $(FILES)
-	mv -b -V t choice.tar OLD
+README: choice.1
+	nroff -man choice.1 | sed 's,.,,g' > README
 
 # dependencies
 
